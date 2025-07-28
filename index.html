@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WisataKita - Destinasi Wisata Kota Batu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gradient-to-br from-amber-50 to-rose-50">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-lg" x-data="{ open: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-amber-800">WisataKita</h1>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#beranda" class="text-amber-700 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Beranda</a>
+                        <a href="#destinasi" class="text-amber-700 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Destinasi</a>
+                        <a href="saran.html" class="text-amber-700 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Saran</a>
+                        <a href="saran.html" class="text-amber-700 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Kontak</a>
+                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300 transform hover:scale-105" onclick="location.href='wisata2.html'">
+                            Pesan Tiket
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="open = !open" class="text-amber-800 hover:text-amber-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="open" class="md:hidden bg-white/95 backdrop-blur-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#beranda" class="text-amber-700 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
+                <a href="#destinasi" class="text-amber-700 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Destinasi</a>
+                <a href="wisata2.html" class="text-amber-700 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Pemesanan</a>
+                <a href="saran.html" class="text-amber-700 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Saran</a>
+                <a href="saran.html" class="text-amber-700 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-100 via-yellow-50 to-rose-100 relative overflow-hidden pt-16">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-100/80 to-transparent"></div>
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold text-amber-900 mb-6 animate-pulse">
+                Wisata Kota Batu
+            </h1>
+            <p class="text-xl md:text-2xl text-amber-800 mb-8 font-light">
+                Destinasi indah untuk liburan terbaikmu
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition duration-500 transform hover:scale-105 shadow-lg">
+                    Lihat Tempat Wisata
+                </button>
+                <button class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition duration-500 transform hover:scale-105 shadow-lg" onclick="location.href='wisata2.html'">
+                    Pesan Sekarang
+                </button>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-yellow-200 rounded-full opacity-60 animate-bounce"></div>
+        <div class="absolute bottom-20 right-10 w-16 h-16 bg-rose-200 rounded-full opacity-60 animate-bounce" style="animation-delay: 0.5s;"></div>
+        <div class="absolute top-1/2 left-20 w-12 h-12 bg-emerald-200 rounded-full opacity-60 animate-bounce" style="animation-delay: 1s;"></div>
+    </section>
+
+<!-- Gallery Destinasi -->
+    <section id="destinasi" class="py-20 bg-gradient-to-br from-emerald-50 to-yellow-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-emerald-900 mb-4">Destinasi Populer</h2>
+                <p class="text-lg text-emerald-700 max-w-2xl mx-auto">Jelajahi keindahan wisata Kota Batu yang menawarkan pengalaman tak terlupakan</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Museum Angkut -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-amber-200 to-yellow-200 relative overflow-hidden">
+                        <img src="img/angkut.jpeg" alt="Museum Angkut" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">Museum Angkut</h3>
+                        <p class="text-amber-700 mb-4">Museum transportasi dengan koleksi kendaraan dari berbagai periode dan zona tematik yang menarik.</p>
+                        <button @click="expanded = !expanded" class="text-amber-600 hover:text-amber-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-amber-50 rounded-lg">
+                            <p class="text-sm text-amber-800 mb-2"><strong>Jam Buka:</strong> 12.00 - 20.00 WIB</p>
+                            <p class="text-sm text-amber-800 mb-2"><strong>Alamat:</strong> Jl. Terusan Sultan Agung No.2, Ngaglik, Kec. Batu</p>
+                            <p class="text-sm text-amber-800"><strong>Telepon:</strong> (0341) 123456</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BNS -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-purple-200 to-blue-200 relative overflow-hidden">
+                        <img src="img/bns.jpeg" alt="Batu Night Spectacular" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🎡</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-purple-900 mb-2">Batu Night Spectacular</h3>
+                        <p class="text-purple-700 mb-4">Taman hiburan malam dengan wahana seru, taman lampion, dan pertunjukan live yang memukau.</p>
+                        <button @click="expanded = !expanded" class="text-purple-600 hover:text-purple-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-purple-50 rounded-lg">
+                            <p class="text-sm text-purple-800 mb-2"><strong>Jam Buka:</strong> 15.00 - 23.00 WIB</p>
+                            <p class="text-sm text-purple-800 mb-2"><strong>Alamat:</strong> Jl. Hayam Wuruk No.1, Oro-Oro Ombo, Kec. Batu</p>
+                            <p class="text-sm text-purple-800"><strong>Telepon:</strong> (0341) 234567</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- San Terra -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-green-200 to-emerald-200 relative overflow-hidden">
+                        <img src="img/santera.jpeg" alt="Flora Wisata San Terra" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🌸</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-900 mb-2">Flora Wisata San Terra</h3>
+                        <p class="text-green-700 mb-4">Kebun bunga indah dengan spot foto Instagramable dan fasilitas rekreasi keluarga.</p>
+                        <button @click="expanded = !expanded" class="text-green-600 hover:text-green-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-green-50 rounded-lg">
+                            <p class="text-sm text-green-800 mb-2"><strong>Jam Buka:</strong> 08.00 - 17.00 WIB</p>
+                            <p class="text-sm text-green-800 mb-2"><strong>Alamat:</strong> Jl. Trunojoyo, Jurangrejo, Pandesari, Kec. Pujon</p>
+                            <p class="text-sm text-green-800"><strong>Instagram:</strong> @santerrabatu</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jatim Park 1-->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-orange-200 to-red-200 relative overflow-hidden">
+                        <img src="img/jatimpark1.jpeg" alt="Jatim Park" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🎢</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-orange-900 mb-2">Jatim Park 1</h3>
+                        <p class="text-orange-700 mb-4">Taman rekreasi dan edukasi dengan anjungan nusantara</p>
+                        <button @click="expanded = !expanded" class="text-orange-600 hover:text-orange-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-orange-50 rounded-lg">
+                            <p class="text-sm text-orange-800 mb-2"><strong>Jam Buka:</strong> 08.30 - 16.30 WIB</p>
+                            <p class="text-sm text-orange-800 mb-2"><strong>Jatim Park 1:</strong> Jl. Kartika No.2, Sisir</p>
+                            <p class="text-sm text-amber-800"><strong>Telepon:</strong> (0341) 123456</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Jatim Park 2-->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-orange-200 to-red-200 relative overflow-hidden">
+                        <img src="img/jatimpark2.jpeg" alt="Jatim Park" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🎢</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-orange-900 mb-2">Jatim Park 2</h3>
+                        <p class="text-orange-700 mb-4">Batu Secret Zoo dan Museum Satwa</p>
+                        <button @click="expanded = !expanded" class="text-orange-600 hover:text-orange-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-orange-50 rounded-lg">
+                            <p class="text-sm text-orange-800 mb-2"><strong>Jam Buka:</strong> 08.30 - 16.30 WIB</p>
+                            <p class="text-sm text-orange-800 mb-2"><strong>Jatim Park 2:</strong> Jl. Oro-Oro Ombo No.9, Temas</p>
+                            <p class="text-sm text-amber-800"><strong>Telepon:</strong> (0341) 234567</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jatim Park 3-->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-orange-200 to-red-200 relative overflow-hidden">
+                        <img src="img/jatimpark3.jpeg" alt="Jatim Park" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🎢</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-orange-900 mb-2">Jatim Park 3</h3>
+                        <p class="text-orange-700 mb-4">Dino Park dan teknologi futuristik</p>
+                        <button @click="expanded = !expanded" class="text-orange-600 hover:text-orange-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-orange-50 rounded-lg">
+                            <p class="text-sm text-orange-800 mb-2"><strong>Jam Buka:</strong> 08.30 - 16.30 WIB</p>
+                            <p class="text-sm text-orange-800"><strong>Jatim Park 3:</strong> Jl. Ir. Soekarno No.144, Beji</p>
+                            <p class="text-sm text-amber-800"><strong>Telepon:</strong> (0341) 345678</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Taman Langit -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl" x-data="{ expanded: false }">
+                    <div class="h-48 bg-gradient-to-br from-sky-200 to-blue-200 relative overflow-hidden">
+                        <img src="img/tamanlangit1.webp" alt="Taman Langit" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">⛰️</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-sky-900 mb-2">Taman Langit</h3>
+                        <p class="text-sky-700 mb-4">Destinasi wisata ketinggian dengan pemandangan alam dan spot foto artistik yang menawan.</p>
+                        <button @click="expanded = !expanded" class="text-sky-600 hover:text-sky-800 font-semibold">
+                            <span x-text="expanded ? 'Tutup Detail' : 'Lihat Detail'"></span>
+                        </button>
+                        <div x-show="expanded" class="mt-4 p-4 bg-sky-50 rounded-lg">
+                            <p class="text-sm text-sky-800 mb-2"><strong>Jam Buka:</strong> 07.00 - 17.00 WIB</p>
+                            <p class="text-sm text-sky-800 mb-2"><strong>Alamat:</strong> Jl. Gunung Banyak, Gunungsari, Kec. Bumiaji</p>
+                            <p class="text-sm text-sky-800"><strong>Telepon:</strong> (0341) 345678</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Destination -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 hover:shadow-2xl">
+                    <div class="h-48 bg-gradient-to-br from-rose-200 to-pink-200 relative overflow-hidden">
+                        <img src="img/alun-alun.webp" alt="Destinasi Lainnya" class="w-full h-full object-cover hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="text-6xl flex items-center justify-center h-full" style="display: none;">🏞️</div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-rose-900 mb-2">Dan Banyak Lagi...</h3>
+                        <p class="text-rose-700 mb-4">Jelajahi lebih banyak destinasi menarik lainnya di Kota Batu yang menanti untuk dijelajahi.</p>
+                        <button class="text-rose-600 hover:text-rose-800 font-semibold">
+                            Lihat Semua Destinasi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informasi Penting -->
+    <section class="py-20 bg-gradient-to-br from-yellow-50 to-amber-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">Informasi Penting</h2>
+                <p class="text-lg text-amber-700">Hal-hal yang perlu Anda ketahui sebelum berkunjung</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-4">🕒</div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">Jam Operasional</h3>
+                    <p class="text-amber-700">Sebagian besar destinasi buka dari pagi hingga sore. Pastikan cek jam buka setiap tempat wisata.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">Reservasi Online</h3>
+                    <p class="text-amber-700">Pesan tiket secara online untuk mendapatkan harga terbaik dan menghindari antrian panjang.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-4">📸</div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">Spot Foto Terbaik</h3>
+                    <p class="text-amber-700">Setiap destinasi memiliki spot foto Instagram-worthy yang sangat cocok untuk koleksi foto Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cuaca Hari Ini -->
+    <section class="py-16 bg-gradient-to-br from-emerald-50 to-teal-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+                <h2 class="text-3xl font-bold text-emerald-900 mb-6">Cuaca Hari Ini di Batu</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <div class="text-6xl">☀️</div>
+                    <div class="text-center md:text-left">
+                        <div class="text-4xl font-bold text-emerald-900 mb-2">24°C</div>
+                        <div class="text-xl text-emerald-700 mb-2">Cerah Berawan</div>
+                        <div class="text-emerald-600">Cuaca ideal untuk berwisata!</div>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl">
+                        <div class="text-sm text-emerald-800 mb-1">Kelembaban: 65%</div>
+                        <div class="text-sm text-emerald-800 mb-1">Angin: 12 km/h</div>
+                        <div class="text-sm text-emerald-800">UV Index: 6 (Sedang)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mengapa Memilih Wisata Batu -->
+    <section class="py-20 bg-gradient-to-br from-rose-50 to-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-rose-900 mb-4">Mengapa Memilih Wisata Batu?</h2>
+                <p class="text-lg text-rose-700 max-w-2xl mx-auto">Kota Batu menawarkan pengalaman wisata yang tak akan terlupakan</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">✓</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-rose-900 mb-2">Alam yang Sejuk dan Segar</h3>
+                            <p class="text-rose-700">Udara pegunungan yang sejuk dan segar, cocok untuk refreshing dari hiruk pikuk kota.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">✓</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-rose-900 mb-2">Banyak Pilihan Destinasi Keluarga</h3>
+                            <p class="text-rose-700">Dari museum hingga taman bermain, semua cocok untuk liburan keluarga yang menyenangkan.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">✓</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-rose-900 mb-2">Akses Mudah dari Kota Besar</h3>
+                            <p class="text-rose-700">Lokasi strategis dengan akses mudah dari Malang, Surabaya, dan kota-kota besar lainnya.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">✓</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-rose-900 mb-2">Harga Terjangkau</h3>
+                            <p class="text-rose-700">Nikmati berbagai wahana dan destinasi dengan harga yang ramah di kantong.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-rose-200 to-orange-200 rounded-2xl p-8 text-center">
+                    <div><img src="img/santera1.jpeg" alt=""></div>
+                    <h3 class="text-2xl font-bold text-rose-900 mb-1 mt-4">Florawisata Santerra De Laponte</h3>                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section class="py-20 bg-gradient-to-br from-yellow-50 to-amber-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">Testimoni Pengunjung</h2>
+                <p class="text-lg text-amber-700">Apa kata mereka yang telah merasakan pengalaman wisata di Kota Batu</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-amber-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-amber-800 font-bold">A</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-amber-900">Andi Pratama</h4>
+                            <p class="text-amber-600 text-sm">Jakarta</p>
+                        </div>
+                    </div>
+                    <p class="text-amber-800 italic">"Liburan keluarga yang sangat menyenangkan! Anak-anak suka sekali dengan wahana di Jatim Park. Pasti akan kembali lagi!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-rose-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-rose-800 font-bold">S</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-amber-900">Sari Dewi</h4>
+                            <p class="text-amber-600 text-sm">Surabaya</p>
+                        </div>
+                    </div>
+                    <p class="text-amber-800 italic">"Museum Angkut sangat unik dan edukatif. Banyak spot foto yang Instagramable. Recommended banget!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-green-800 font-bold">B</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-amber-900">Budi Santoso</h4>
+                            <p class="text-amber-600 text-sm">Malang</p>
+                        </div>
+                    </div>
+                    <p class="text-amber-800 italic">"BNS di malam hari sangat indah dengan lampion-lampionnya. Pengalaman yang tak terlupakan!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-br from-amber-800 to-amber-900 text-amber-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <!-- Company Info -->
+            <div class="flex flex-col items-center md:items-start">
+                <h3 class="text-2xl font-bold mb-4 text-amber-100">WisataKita</h3>
+                <p class="text-amber-200 mb-4">Menjelajahi keindahan Kota Batu bersama kami</p>
+                <div class="flex space-x-10 mb-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white hover:-translate-y-1 hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-white hover:-translate-y-1 hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-green-600 flex items-center justify-center text-white hover:-translate-y-1 hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white hover:-translate-y-1 hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Menu Links -->
+             <div class="flex flex-col items-center md:items-start">
+                <h4 class="text-xl font-semibold mb-4 text-amber-100">Menu</h4>
+                <ul class="flex flex-row space-x-6">
+                    <li><a href="#beranda" class="text-amber-200 hover:text-white transition-colors duration-300">Beranda</a></li>
+                    <li><a href="#destinasi" class="text-amber-200 hover:text-white transition-colors duration-300">Destinasi</a></li>
+                    <li><a href="#saran" class="text-amber-200 hover:text-white transition-colors duration-300">Saran</a></li>
+                    <li><a href="#kontak" class="text-amber-200 hover:text-white transition-colors duration-300">Kontak</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="flex flex-col items-center md:items-start">
+                <h4 class="text-xl font-semibold mb-4 text-amber-100">Kontak</h4>
+                <div class="space-y-3">
+                    <p class="flex items-center gap-2 text-amber-200">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Jl. Trunojoyo No. 1, Kota Batu
+                    </p>
+                    <p class="flex items-center gap-2 text-amber-200">
+                        <i class="fas fa-phone"></i>
+                        (0341) 123456
+                    </p>
+                    <p class="flex items-center gap-2 text-amber-200">
+                        <i class="fas fa-envelope"></i>
+                        info@wisatakita.com
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-amber-700/50 mt-12 pt-8 text-center">
+            <p class="text-amber-200">&copy; 2025 WisataKita. All rights reserved.</p>
+            <p class="text-sm text-amber-200/80 mt-2">Developed by Moch Rijal Syafrudin</p>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('destinationCard', () => ({
+                expanded: false,
+            }));
+        });
+        // Smooth scrolling untuk navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect untuk hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('#beranda');
+            const floatingElements = document.querySelectorAll('#beranda .absolute');
+            
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            
+            // Animasi floating elements dengan kecepatan berbeda
+            floatingElements.forEach((element, index) => {
+                const speed = 0.1 + (index * 0.05);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+
+        // Smooth scrolling untuk navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect untuk hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('#beranda');
+            const floatingElements = document.querySelectorAll('#beranda .absolute');
+            
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            
+            // Animasi floating elements dengan kecepatan berbeda
+            floatingElements.forEach((element, index) => {
+                const speed = 0.1 + (index * 0.05);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Intersection Observer untuk animasi scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe semua card destinasi
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('#destinasi > div > div > div');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+
+            // Observe section lainnya
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Typing effect untuk hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Auto-slider untuk testimoni
+        let currentTestimoni = 0;
+        const testimoniCards = document.querySelectorAll('#testimoni .grid > div');
+        
+        function slideTestimoni() {
+            if (testimoniCards.length > 0) {
+                testimoniCards.forEach((card, index) => {
+                    card.style.transform = `translateX(${(index - currentTestimoni) * 100}%)`;
+                    card.style.opacity = index === currentTestimoni ? '1' : '0.7';
+                });
+                
+                currentTestimoni = (currentTestimoni + 1) % testimoniCards.length;
+            }
+        }
+
+        // Jalankan slider testimoni setiap 4 detik
+        setInterval(slideTestimoni, 4000);
+
+        // Weather animation
+        function animateWeatherIcon() {
+            const weatherIcon = document.querySelector('section .text-6xl');
+            if (weatherIcon && weatherIcon.textContent === '☀️') {
+                weatherIcon.style.animation = 'pulse 2s infinite';
+            }
+        }
+
+        // Hover effect untuk destination cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const destinationCards = document.querySelectorAll('#destinasi .bg-white');
+            
+            destinationCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) rotateY(5deg)';
+                    this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+                    this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotateY(0deg)';
+                    this.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+
+        // Floating hearts animation untuk testimoni
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💛';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.fontSize = '20px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            heart.style.transition = 'all 3s ease-out';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.top = '-50px';
+                heart.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                document.body.removeChild(heart);
+            }, 3000);
+        }
+
+        // Trigger floating hearts pada hover testimoni
+        document.addEventListener('DOMContentLoaded', () => {
+            const testimoniSection = document.querySelector('.py-20.bg-gradient-to-br.from-yellow-50');
+            if (testimoniSection) {
+                testimoniSection.addEventListener('mouseenter', () => {
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => createFloatingHeart(), i * 200);
+                    }
+                });
+            }
+        });
+
+        // Mouse trail effect
+        const trail = [];
+        const trailLength = 10;
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply floating animation to floating elements
+            document.querySelectorAll('#beranda .absolute').forEach(element => {
+                element.classList.add('floating');
+            });
+            
+            lazyLoadImages();
+            animateWeatherIcon();
+            
+            // Stagger animation untuk cards
+            const cards = document.querySelectorAll('#destinasi .bg-white');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            console.log('WisataKita: All animations initialized! 🎉');
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>

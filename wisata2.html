@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WisataKita - Pemesanan Tiket Wisata</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-in': 'bounceIn 0.5s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        bounceIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8)' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(255, 215, 0, 0.6)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gradient-to-br from-amber-50 via-yellow-50 to-rose-50 min-h-screen" x-data="bookingApp()">
+    <!-- Header -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-2 text-2xl font-bold text-amber-800 hover:text-amber-600 transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-mountain text-amber-600"></i>
+                    <span>WisataKita</span>
+                </a>
+                <div class="flex items-center space-x-2 text-amber-700">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span class="font-medium">Pemesanan Tiket</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 pb-16 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Progress Steps -->
+            <div class="mb-8 animate-slide-up">
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center justify-between max-w-2xl mx-auto">
+                        <!-- Step 1 -->
+                        <div class="flex items-center" :class="currentStep >= 1 ? 'text-amber-600' : 'text-gray-400'">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white transition-all duration-300"
+                                 :class="currentStep >= 1 ? 'bg-gradient-to-r from-amber-500 to-orange-500 transform scale-110' : 'bg-gray-300'">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="ml-3 font-medium hidden sm:block">Data Diri</span>
+                        </div>
+                        
+                        <!-- Line 1 -->
+                        <div class="flex-1 h-1 mx-4 rounded-full transition-all duration-300"
+                             :class="currentStep >= 2 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gray-300'"></div>
+                        
+                        <!-- Step 2 -->
+                        <div class="flex items-center" :class="currentStep >= 2 ? 'text-amber-600' : 'text-gray-400'">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white transition-all duration-300"
+                                 :class="currentStep >= 2 ? 'bg-gradient-to-r from-amber-500 to-orange-500 transform scale-110' : 'bg-gray-300'">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <span class="ml-3 font-medium hidden sm:block">Detail Tiket</span>
+                        </div>
+                        
+                        <!-- Line 2 -->
+                        <div class="flex-1 h-1 mx-4 rounded-full transition-all duration-300"
+                             :class="currentStep >= 3 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gray-300'"></div>
+                        
+                        <!-- Step 3 -->
+                        <div class="flex items-center" :class="currentStep >= 3 ? 'text-amber-600' : 'text-gray-400'">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white transition-all duration-300"
+                                 :class="currentStep >= 3 ? 'bg-gradient-to-r from-amber-500 to-orange-500 transform scale-110' : 'bg-gray-300'">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <span class="ml-3 font-medium hidden sm:block">Pembayaran</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Booking Card -->
+            <div class="lg:w-2/3 md:w-3/4 w-full mx-auto animate-slide-up">
+                <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+                    <!-- Card Header -->
+                    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white p-8 text-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent"></div>
+                        <div class="relative z-10">
+                            <h1 class="text-3xl md:text-4xl font-bold mb-2 animate-bounce-in">
+                                <i class="fas fa-ticket-alt mr-3"></i>
+                                Pemesanan Tiket Wisata
+                            </h1>
+                            <p class="text-lg opacity-90">Lengkapi form di bawah untuk memesan tiket wisata Anda</p>
+                        </div>
+                        <!-- Decorative circles -->
+                        <div class="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-float opacity-60"></div>
+                        <div class="absolute bottom-4 right-4 w-6 h-6 bg-white/20 rounded-full animate-float opacity-60" style="animation-delay: 0.5s;"></div>
+                    </div>
+
+                    <!-- Form Container -->
+                    <div class="p-8">
+                        <form @submit.prevent="submitForm()">
+                            <!-- Step 1: Data Diri -->
+                            <div x-show="currentStep === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-x-4" x-transition:enter-end="opacity-100 transform translate-x-0">
+                                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center">
+                                    <i class="fas fa-user-circle mr-2"></i>
+                                    Informasi Personal
+                                </h3>
+
+                                <!-- Nama Lengkap -->
+                                <div class="mb-6 relative">
+                                    <input type="text" x-model="formData.nama" 
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.nama, 'ring-2 ring-green-400 border-green-400': formData.nama && !errors.nama}"
+                                           placeholder="Nama Lengkap" required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-amber-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-amber-600 peer-focus:bg-white peer-focus:text-sm">
+                                        <i class="fas fa-user mr-1"></i>Nama Lengkap
+                                    </label>
+                                    <i class="fas fa-user absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.nama" class="text-red-500 text-sm mt-1" x-text="errors.nama"></p>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-6 relative">
+                                    <input type="email" x-model="formData.email" 
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.email, 'ring-2 ring-green-400 border-green-400': formData.email && !errors.email}"
+                                           placeholder="Email" required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-amber-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-amber-600 peer-focus:bg-white peer-focus:text-sm">
+                                        <i class="fas fa-envelope mr-1"></i>Email
+                                    </label>
+                                    <i class="fas fa-envelope absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.email" class="text-red-500 text-sm mt-1" x-text="errors.email"></p>
+                                </div>
+
+                                <!-- No. Telepon -->
+                                <div class="mb-6 relative">
+                                    <input type="tel" x-model="formData.telepon" 
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.telepon, 'ring-2 ring-green-400 border-green-400': formData.telepon && !errors.telepon}"
+                                           placeholder="No. Telepon" required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-amber-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-amber-600 peer-focus:bg-white peer-focus:text-sm">
+                                        <i class="fas fa-phone mr-1"></i>No. Telepon
+                                    </label>
+                                    <i class="fas fa-phone absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.telepon" class="text-red-500 text-sm mt-1" x-text="errors.telepon"></p>
+                                </div>
+
+                                <!-- Jenis Kelamin -->
+                                <div class="mb-8">
+                                    <label class="block text-amber-900 font-medium mb-4">
+                                        <i class="fas fa-venus-mars mr-2"></i>Jenis Kelamin
+                                    </label>
+                                    <div class="flex space-x-6">
+                                        <label class="flex items-center space-x-3 cursor-pointer p-4 rounded-2xl bg-white/50 hover:bg-white/70 transition-all duration-300"
+                                               :class="formData.jenisKelamin === 'Pria' ? 'ring-2 ring-amber-400 bg-white/80' : ''">
+                                            <input type="radio" x-model="formData.jenisKelamin" value="Pria" class="w-5 h-5 text-amber-600">
+                                            <i class="fas fa-mars text-blue-500"></i>
+                                            <span class="font-medium text-amber-900">Pria</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 cursor-pointer p-4 rounded-2xl bg-white/50 hover:bg-white/70 transition-all duration-300"
+                                               :class="formData.jenisKelamin === 'Wanita' ? 'ring-2 ring-amber-400 bg-white/80' : ''">
+                                            <input type="radio" x-model="formData.jenisKelamin" value="Wanita" class="w-5 h-5 text-amber-600">
+                                            <i class="fas fa-venus text-pink-500"></i>
+                                            <span class="font-medium text-amber-900">Wanita</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="button" @click="nextStep()"
+                                            class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                        <i class="fas fa-arrow-right mr-2"></i>
+                                        Lanjutkan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Detail Tiket -->
+                            <div x-show="currentStep === 2" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-x-4" x-transition:enter-end="opacity-100 transform translate-x-0">
+                                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center">
+                                    <i class="fas fa-map-marked-alt mr-2"></i>
+                                    Detail Pemesanan
+                                </h3>
+
+                                <!-- Pilihan Wisata -->
+                                <div class="mb-6 relative">
+                                    <select x-model="formData.wisata" 
+                                            class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                            :class="{'ring-2 ring-red-400 border-red-400': errors.wisata, 'ring-2 ring-green-400 border-green-400': formData.wisata && !errors.wisata}"
+                                            required>
+                                        <option value="">Pilih Destinasi Wisata</option>
+                                        <option value="museum-angkut">🚗 Museum Angkut - Rp 100.000</option>
+                                        <option value="bns">🌙 Batu Night Spectacular - Rp 85.000</option>
+                                        <option value="san-terra">🌸 Flora Wisata San Terra - Rp 75.000</option>
+                                        <option value="jatim-park-1">🎡 Jawa Timur Park 1 - Rp 120.000</option>
+                                        <option value="jatim-park-2">🦁 Jawa Timur Park 2 - Rp 130.000</option>
+                                        <option value="jatim-park-3">🦕 Jawa Timur Park 3 - Rp 140.000</option>
+                                        <option value="taman-langit">☁️ Taman Langit Gunung Banyak - Rp 50.000</option>
+                                    </select>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700">
+                                        <i class="fas fa-map-marker-alt mr-1"></i>Pilihan Wisata
+                                    </label>
+                                    <p x-show="errors.wisata" class="text-red-500 text-sm mt-1" x-text="errors.wisata"></p>
+                                </div>
+
+                                <!-- Tanggal Kunjungan -->
+                                <div class="mb-6 relative">
+                                    <input type="date" x-model="formData.tanggal" :min="minDate"
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.tanggal, 'ring-2 ring-green-400 border-green-400': formData.tanggal && !errors.tanggal}"
+                                           required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700">
+                                        <i class="fas fa-calendar-alt mr-1"></i>Tanggal Kunjungan
+                                    </label>
+                                    <i class="fas fa-calendar-alt absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.tanggal" class="text-red-500 text-sm mt-1" x-text="errors.tanggal"></p>
+                                </div>
+
+                                <!-- Jumlah Tiket -->
+                                <div class="mb-8 relative">
+                                    <input type="number" x-model="formData.jumlahTiket" min="1" max="10"
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.jumlahTiket, 'ring-2 ring-green-400 border-green-400': formData.jumlahTiket && !errors.jumlahTiket}"
+                                           required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700">
+                                        <i class="fas fa-users mr-1"></i>Jumlah Tiket
+                                    </label>
+                                    <i class="fas fa-users absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.jumlahTiket" class="text-red-500 text-sm mt-1" x-text="errors.jumlahTiket"></p>
+                                </div>
+
+                                <div class="flex space-x-4 justify-center">
+                                    <button type="button" @click="previousStep()"
+                                            class="bg-white/70 hover:bg-white text-amber-700 font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl border border-amber-200 transition-all duration-300 transform hover:scale-105">
+                                        <i class="fas fa-arrow-left mr-2"></i>
+                                        Kembali
+                                    </button>
+                                    <button type="button" @click="nextStep()"
+                                            class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                        <i class="fas fa-arrow-right mr-2"></i>
+                                        Lanjutkan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Pembayaran -->
+                            <div x-show="currentStep === 3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-x-4" x-transition:enter-end="opacity-100 transform translate-x-0">
+                                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center">
+                                    <i class="fas fa-credit-card mr-2"></i>
+                                    Pembayaran
+                                </h3>
+
+                                <!-- Ringkasan Pesanan -->
+                                <div class="mb-8 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-2xl p-6 border border-emerald-200" x-show="formData.wisata">
+                                    <h4 class="font-bold text-emerald-900 mb-4">
+                                        <i class="fas fa-receipt mr-2"></i>Ringkasan Pesanan
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-emerald-800 mb-2"><strong>Destinasi:</strong> <span x-text="getWisataName()"></span></p>
+                                            <p class="text-emerald-800 mb-2"><strong>Jumlah Tiket:</strong> <span x-text="formData.jumlahTiket"></span> orang</p>
+                                            <p class="text-emerald-800"><strong>Harga per Tiket:</strong> <span x-text="formatCurrency(getWisataPrice())"></span></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-emerald-800 mb-2"><strong>Total Harga:</strong> <span x-text="formatCurrency(getTotalPrice())" class="text-lg font-bold"></span></p>
+                                            <p class="text-emerald-700 text-sm"><i class="fas fa-info-circle mr-1"></i>Minimal DP: Rp 50.000</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Uang Muka -->
+                                <div class="mb-6 relative">
+                                    <input type="number" x-model="formData.uangMuka" min="50000" step="1000"
+                                           class="peer w-full px-4 py-4 bg-white/70 border border-amber-200 rounded-2xl text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300"
+                                           :class="{'ring-2 ring-red-400 border-red-400': errors.uangMuka, 'ring-2 ring-green-400 border-green-400': formData.uangMuka && !errors.uangMuka}"
+                                           required>
+                                    <label class="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-amber-700">
+                                        <i class="fas fa-money-bill-wave mr-1"></i>Uang Muka (DP)
+                                    </label>
+                                    <i class="fas fa-money-bill-wave absolute right-4 top-4 text-amber-400"></i>
+                                    <p x-show="errors.uangMuka" class="text-red-500 text-sm mt-1" x-text="errors.uangMuka"></p>
+                                    <p class="text-amber-600 text-sm mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        Sisa pembayaran dapat dilakukan di lokasi
+                                    </p>
+                                </div>
+
+                                <!-- Metode Pembayaran -->
+                                <div class="mb-8">
+                                    <label class="block text-amber-900 font-medium mb-4">
+                                        <i class="fas fa-credit-card mr-2"></i>Metode Pembayaran DP
+                                    </label>
+                                    <div class="flex space-x-6">
+                                        <label class="flex items-center space-x-3 cursor-pointer p-4 rounded-2xl bg-white/50 hover:bg-white/70 transition-all duration-300"
+                                               :class="formData.metodeBayar === 'Transfer Bank' ? 'ring-2 ring-amber-400 bg-white/80' : ''">
+                                            <input type="radio" x-model="formData.metodeBayar" value="Transfer Bank" class="w-5 h-5 text-amber-600">
+                                            <i class="fas fa-university text-blue-600"></i>
+                                            <span class="font-medium text-amber-900">Transfer Bank</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 cursor-pointer p-4 rounded-2xl bg-white/50 hover:bg-white/70 transition-all duration-300"
+                                               :class="formData.metodeBayar === 'E-Wallet' ? 'ring-2 ring-amber-400 bg-white/80' : ''">
+                                            <input type="radio" x-model="formData.metodeBayar" value="E-Wallet" class="w-5 h-5 text-amber-600">
+                                            <i class="fas fa-mobile-alt text-green-600"></i>
+                                            <span class="font-medium text-amber-900">E-Wallet</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="flex space-x-4 justify-center">
+                                    <button type="button" @click="previousStep()"
+                                            class="bg-white/70 hover:bg-white text-amber-700 font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl border border-amber-200 transition-all duration-300 transform hover:scale-105">
+                                        <i class="fas fa-arrow-left mr-2"></i>
+                                        Kembali
+                                    </button>
+                                    <button type="submit" :disabled="isSubmitting"
+                                            class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50">
+                                        <span x-show="!isSubmitting">
+                                            <i class="fas fa-check mr-2"></i>
+                                            Proses Pesanan
+                                        </span>
+                                        <span x-show="isSubmitting">
+                                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                                            Processing...
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Success Page -->
+                            <div x-show="showSuccess" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" class="text-center p-8">
+                                <h2 class="text-3xl font-bold text-green-600 mb-4">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    Pesanan Berhasil!
+                                </h2>
+                                <p class="text-lg text-gray-700 mb-6">Terima kasih telah memesan tiket wisata bersama kami!</p>
+                                <button @click="resetForm()"
+                                        class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                    <i class="fas fa-undo mr-2"></i>Pesan Lagi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-white/90 backdrop-blur-md shadow-lg py-6 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm text-gray-600">© 2025 WisataKita. All rights reserved.</p>
+            <p class="text-xs text-gray-500 mt-2">Made with Moch Rijal Syafrudin</p>
+        </div>
+    </footer>
+    <script>
+        function bookingApp() {
+            return {
+                currentStep: 1,
+                formData: {
+                    nama: '',
+                    email: '',
+                    telepon: '',
+                    jenisKelamin: '',
+                    wisata: '',
+                    tanggal: '',
+                    jumlahTiket: 1,
+                    uangMuka: 50000,
+                    metodeBayar: 'Transfer Bank'
+                },
+                errors: {},
+                isSubmitting: false,
+                showSuccess: false,
+                minDate: new Date().toISOString().split('T')[0],
+
+                nextStep() {
+                    if (this.validateStep(this.currentStep)) {
+                        this.currentStep++;
+                        this.errors = {};
+                    }
+                },
+
+                previousStep() {
+                    if (this.currentStep > 1) {
+                        this.currentStep--;
+                        this.errors = {};
+                    }
+                },
+
+                validateStep(step) {
+                    this.errors = {};
+                    let valid = true;
+
+                    if (step === 1) {
+                        if (!this.formData.nama) {
+                            this.errors.nama = 'Nama lengkap harus diisi';
+                            valid = false;
+                        }
+                        if (!this.formData.email) {
+                            this.errors.email = 'Email harus diisi';
+                            valid = false;
+                        }
+                        if (!this.formData.telepon) {
+                            this.errors.telepon = 'No. telepon harus diisi';
+                            valid = false;
+                        }
+                        if (!this.formData.jenisKelamin) {
+                            this.errors.jenisKelamin = 'Jenis kelamin harus dipilih';
+                            valid = false;
+                        }
+                    } else if (step === 2) {
+                        if (!this.formData.wisata) {
+                            this.errors.wisata = 'Destinasi wisata harus dipilih';
+                            valid = false;
+                        }
+                        if (!this.formData.tanggal) {
+                            this.errors.tanggal = 'Tanggal kunjungan harus diisi';
+                            valid = false;
+                        }
+                        if (this.formData.jumlahTiket < 1 || this.formData.jumlahTiket > 10) {
+                            this.errors.jumlahTiket = 'Jumlah tiket harus antara 1 dan 10';
+                            valid = false;
+                        }
+                    } else if (step === 3) {
+                        if (this.formData.uangMuka < 50000 || isNaN(this.formData.uangMuka)) {
+                            this.errors.uangMuka = 'Uang muka minimal Rp 50.000';
+                            valid = false;
+                        }
+                        if (!this.formData.metodeBayar) {
+                            this.errors.metodeBayar = 'Metode pembayaran harus dipilih';
+                            valid = false;
+                        }
+                    }
+                    return valid;
+                },
+                getWisataName() {
+                    const wisataNames = {
+                        'museum-angkut': 'Museum Angkut',
+                        'bns': 'Batu Night Spectacular',
+                        'san-terra': 'Flora Wisata San Terra',
+                        'jatim-park-1': 'Jawa Timur Park 1',
+                        'jatim-park-2': 'Jawa Timur Park 2',
+                        'jatim-park-3': 'Jawa Timur Park 3',
+                        'taman-langit': 'Taman Langit Gunung Banyak'
+                    };
+                    return wisataNames[this.formData.wisata] || '';
+                },
+                getWisataPrice() {
+                    const wisataPrices = {
+                        'museum-angkut': 100000,
+                        'bns': 85000,
+                        'san-terra': 75000,
+                        'jatim-park-1': 120000,
+                        'jatim-park-2': 130000,
+                        'jatim-park-3': 140000,
+                        'taman-langit': 50000
+                    };
+                    return wisataPrices[this.formData.wisata] || 0;
+                },
+                getTotalPrice() {
+                    return this.getWisataPrice() * this.formData.jumlahTiket;
+                },
+                formatCurrency(value) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(value);
+                },
+                submitForm() {
+                    if (this.validateStep(this.currentStep)) {
+                        this.isSubmitting = true;
+                        setTimeout(() => {
+                            this.showSuccess = true;
+                            this.isSubmitting = false;
+                        }, 2000); // Simulate network delay
+                    }
+                },
+                resetForm() {
+                    this.currentStep = 1;
+                    this.formData = {
+                        nama: '',
+                        email: '',
+                        telepon: '',
+                        jenisKelamin: '',
+                        wisata: '',
+                        tanggal: '',
+                        jumlahTiket: 1,
+                        uangMuka: 50000,
+                        metodeBayar: 'Transfer Bank'
+                    };
+                    this.errors = {};
+                    this.showSuccess = false;
+                }
+            };
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
